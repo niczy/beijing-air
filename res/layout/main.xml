@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+>
+<LinearLayout 
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:id="@+id/container"
+	android:background="@drawable/bg0">
+	<LinearLayout android:layout_height="0dip"
+		android:layout_weight="1" android:layout_width="fill_parent"
+		android:orientation="vertical">
+		<LinearLayout android:layout_marginTop="70dip"
+			android:layout_marginRight="30dip"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:paddingRight="10dip"
+			android:background="#30000000">
+			<TextView android:id="@+id/air_des" android:layout_height="wrap_content"
+				android:gravity="center"
+				android:layout_width="fill_parent" android:textColor="@android:color/white"
+				android:text="Mordastdf" android:textSize="60sp" android:padding="4dip" />
+			<LinearLayout android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:orientation="horizontal">
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="实时PM2.5 AQI 指数："
+					android:textColor="@android:color/white" android:padding="4dip" />
+				<TextView android:id="@+id/air_quality"
+					android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:textColor="@android:color/white" android:text="300"
+					android:padding="4dip" />
+			</LinearLayout>
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:gravity="center_vertical">
+				<TextView android:padding="4dip" android:id="@+id/update_time"
+					android:textColor="@android:color/white" android:text="更新于 1989-23-2 23：00"
+					android:layout_width="wrap_content" android:layout_height="wrap_content" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+	
+</LinearLayout>
+<LinearLayout android:layout_height="wrap_content"
+android:layout_alignParentBottom="true"
+		android:layout_width="fill_parent" android:id="@+id/ad">
+	</LinearLayout>
+</RelativeLayout>
