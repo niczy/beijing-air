@@ -5,21 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-
+import weibo4android.Paging;
+import weibo4android.Weibo;
+import weibo4android.WeiboException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -82,52 +80,27 @@ public class BeijingAirActivity extends Activity {
         mAdLayout.addView(mAdView);
         mApp = (AirApp) getApplication();
         mDesText = (TextView) findViewById(R.id.air_des);
-//        System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
-//        System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
-//        Weibo weibo = new Weibo();
-//        //weibo.setOAuthConsumer("2173128732", "4afb9d8a45e57a3ab60f405fd02beb0c");
-//        
-//        try {
-//            Oau
-//            Log.d("Air", oauth.);
-//            weibo.setOAuthAccessToken("2428f8c46120a7fce61cd94561529070", "28a054ad9aa57d9f3d82cc6094191123");
-//            //Log.d("Air", weibo.getOAuthRequestToken("http://nich01as.com").getAuthenticationURL());
-//            //Log.d("Air", weibo.getOAuthRequestToken().getAccessToken(pin));
-//            AccessToken accessToken = weibo.getOAuthRequestToken().getAccessToken("613997");
-//            Log.d("Air", accessToken.getToken() + " : " + accessToken.getTokenSecret());
-//            //weibo.setOAuthAccessToken("6a00e3c90fc5c92d2b2240d95f466713", "6717a467d5a9f5eda868c57fbeb43e6b");
-//            weibo.setToken(accessToken);
-//            User user = weibo.showUser("beijingairpm25");
-//            Log.d("air", "user id is " + user.getId());
-//        } catch (WeiboException e) {
-//            e.printStackTrace();
-//        }
+        System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
+        System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
+       
+
    }
     
     private class UpdateChecker extends AsyncTask<Void, Void, AirStatus> {
 
         @Override
         protected AirStatus doInBackground(Void... params) {
-            
-            AndroidHttpClient client = AndroidHttpClient.newInstance("ruguose");
-            HttpUriRequest reuqest = new HttpGet(API_URL);
+            Weibo weibo = new Weibo();
+            weibo.setToken("8c86257a2a31067d02aa27df14156097", "5d533ddb8b5764825f53fa53d46ac7ef");
+            List<weibo4android.Status> statuses;
             try {
-                HttpResponse response = client.execute(reuqest);
-                
-                InputStreamReader reader = new InputStreamReader(response.getEntity().getContent());
-                char[] buffer = new char[1024];
-                StringBuilder sb = new StringBuilder();
-                int len = 0;
-                while ((len = reader.read(buffer)) >= 0) {
-                    sb.append(buffer, 0, len);
-                }
-                String[] results = sb.toString().split(";");
+                statuses = weibo.getUserTimeline("2423528223", new Paging(1, 1));
+                String[] results = statuses.get(0).getText().split(";");
                 mAirStatus.updateDate = results[0];
                 mAirStatus.updateTime = results[1];
                 mAirStatus.airStatus = Integer.parseInt(results[4].trim());
                 return mAirStatus;
-            } catch (Exception e) {
-                Log.e("BeijingAir", "error", e);
+            } catch (WeiboException e) {
                 return null;
             }
         }
